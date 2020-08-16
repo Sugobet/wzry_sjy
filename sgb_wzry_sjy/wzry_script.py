@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 """
     王者荣耀自动刷经验
+    在手机的内部储存空间里(/sdcard)创建一个空文件夹 sgb_wzry_cache
     先给自己的电脑装上adb,确保adb能够正常运行,用你已知的手段把手机连上adb(不会就百度).
     将下面的"Path"变量修改成你自己的路径  你电脑里的“sgb_wzry_sjy”文件夹绝对路径
     (路径不能有中文),否则会炸. 
     打开cmd->"pip install opencv-python"
-    
+
     本文件的第82行：os.system("adb shell input swipe 1000 500 1000 510 8000")
                                                                         ↑
-    这个是进入关卡时的加载时间，一般情况下,21世纪产的手机加载时间不会超过八秒
-    超了当我没说，自行修改这个数值，单位毫秒
+    这个是进入关卡时的加载时间，自行根据手机性能修改这个数值，单位毫秒.
     author: Sugobet
     Time: 2020/8/15
     QQ:321355478
     Github: https://github.com/Sugobet/wzry_sjy
     有问题联系我
 """
+
 import os
 import cv2
+
 
 Path = "D:/sugo_python/sgb_wzry_sjy"
 
@@ -40,8 +42,12 @@ def InTGame():
     print("自动跑路")
     os.system("adb shell input swipe 307 776 156 510 26500")
     # 启用自动攻击
+    # os.system("adb shell input tap 2121 57")
+    GetImage()
+    i1, i2 = LoadImage(MyResImgPath+"/test.png", PassImage)
+    x, y = Img_I(i1, i2)
     print("自动攻击")
-    os.system("adb shell input tap 2121 57")
+    os.system(f"adb shell input tap {x} {y}")
     # 跳过剧情
     i = 0
     while True:
